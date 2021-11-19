@@ -1,4 +1,4 @@
-exports.probabilityOfClassGivedTokenizedPhrase = (className, input, documents, totals) => {
+exports.probabilityOfClassGivedTokenizedPhraseV1 = (className, input, documents, totals) => {
     
     const p = totals.totalOfDocuments[className] / totals.totalOfFrequences
 
@@ -19,4 +19,15 @@ exports.probabilityOfClassGivedTokenizedPhrase = (className, input, documents, t
     })
 
     return p * productory
+}
+
+exports.probabilityOfClassGivedTokenizedPhraseV2 = (className, input, totals) => {
+    
+    let p = totals[className].pClass
+
+    input.map((value, index) => {
+        p *= totals[className].pTokens[index][value]
+    })
+
+    return p
 }
