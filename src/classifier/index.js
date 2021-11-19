@@ -10,18 +10,18 @@ const normalizeInput = (phrase, bag) => {
 }
 
 module.exports = {
-    NaiveBayesV1(phrase, bag) {
+    v1(phrase, model, bag) {
         
         const input = normalizeInput(phrase, bag)
         
-        let probabilities = Object.getOwnPropertyNames(bag._documents).map(className => {
+        let probabilities = Object.getOwnPropertyNames(model.documents).map(className => {
             return {
                 className,
                 probability: probabilityOfClassGivedTokenizedPhraseV1(
                     className, 
                     input, 
-                    bag._documents,
-                    bag._totals
+                    model.documents,
+                    model.consolidated
                 )
             }
         })
@@ -33,15 +33,15 @@ module.exports = {
         })
     },
 
-    NaiveBayesV2(phrase, bag) {
+    v2(phrase, model, bag) {
         const input = normalizeInput(phrase, bag)
-        let probabilities = Object.getOwnPropertyNames(bag._totals).map(className => {
+        let probabilities = Object.getOwnPropertyNames(model).map(className => {
             return {
                 className,
                 probability: probabilityOfClassGivedTokenizedPhraseV2(
                     className, 
                     input,
-                    bag._totals
+                    model
                 )
             }
         })
